@@ -1,18 +1,26 @@
 class Solution {
     public int subarraysDivByK(int[] nums, int k) {
-       Map<Integer,Integer> nm=new HashMap<>();
-        int c=0,p=nums.length,s=0;
-        nm.put(s,1);
-        for(int i=0;i<p;i++)
-        {
-            s=s+nums[i];
-            s%=k;
-            if(s<0) // for case any negative number % k we want positive part (-1%5=4) 
-                s+=k;
-            if(nm.containsKey(s))
-                c+=nm.get(s);
-            nm.put(s, nm.getOrDefault(s,0)+1);
+        int sum = 0; 
+        int count = 0;
+        HashMap<Integer,Integer>map = new HashMap<>();
+        
+        map.put(sum,1);
+        for(int i = 0;i<nums.length;i++){
+            sum = sum+=nums[i];
+            int temp = sum%k;
+            if(temp<0){
+                temp+=k;
+            }
+            if(map.containsKey(temp)==true){
+                int freq = map.get(temp);
+                count = count+freq;    
+               
+                 map.put(temp,freq+1);
+            }else{
+                map.put(temp,1);
+
+            }
+            
         }
-        return c;
-    }
+        return count;}
 }
